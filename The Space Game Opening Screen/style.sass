@@ -1,0 +1,241 @@
+@import "compass"
+$default-size: 2000
+$crater-color: #e1e3e5
+
+// n is number of stars required, size is the height/width in which these will be generated
+@function multiple-box-shadow ($n,$size,$color1,$color2) 
+  $value: '#{random(2000)}px #{random($size)}px #{$color1}'
+  @for $i from 2 through $n
+    @if $i % 2 == 0
+      $value: '#{$value} , #{random($size)}px #{random($size)}px  #{$color1}'
+    @else
+      $value: '#{$value} , #{random($size)}px #{random($size)}px  #{$color2}'
+
+  @return unquote($value)
+
+$shadows-small:  multiple-box-shadow(300,$default-size,#a2c3e0,#e0a2a2)
+$shadows-medium: multiple-box-shadow(200,$default-size,#a2c3e0,#e0a2a2)
+$shadows-big:    multiple-box-shadow(100,$default-size,#a2c3e0,#e0a2a2)
+
+html
+  background: radial-gradient(circle at center, #353c41 10%, #121318 100%)
+  overflow: hidden
+  height: 100%
+  width: 100%
+  position: fixed
+    
+#stars
+  width: 1px
+  height: 1px
+  background: transparent
+  box-shadow: $shadows-small
+  animation			: animStar 50s linear infinite
+    
+  &:after
+    content: " "
+    position: absolute
+    top: $default-size + px
+    width: 1px
+    height: 1px
+    background: transparent
+    box-shadow: $shadows-small
+    
+#stars2
+  width: 2px
+  height: 2px
+  background: transparent
+  box-shadow: $shadows-medium
+  animation			: animStar 100s linear infinite
+    
+  &:after
+    content: " "
+    position: absolute
+    top: $default-size + px
+    width: 2px
+    height: 2px
+    background: transparent
+    box-shadow: $shadows-medium
+    
+#stars3
+  width: 3px
+  height: 3px
+  background: transparent
+  box-shadow: $shadows-big
+  animation			: animStar 150s linear infinite
+    
+  &:after
+    content: " "
+    position: absolute
+    top: $default-size + px
+    width: 3px
+    height: 3px
+    background: transparent
+    box-shadow: $shadows-big
+
+#moon
+  width: 500px
+  height: 500px
+  border-radius: 250px
+  
+  background: #ebebeb
+  overflow: hidden
+  
+  position: absolute
+  top: 5%
+  left: 50%
+  margin-left: -350px
+  
+  box-shadow:  -40px 0px 200px 10px rgba(112, 139, 162, 0.3), 40px 0px 200px 10px rgba(176, 146, 147, 0.3)
+
+  animation: rotate 30s infinite linear
+    
+  &:after
+    content: " "
+    position: absolute
+      
+    width: 500px
+    height: 500px
+    border-radius: 250px
+    
+    position: absolute
+    box-shadow: inset 20px 0px 60px 0 rgba(112, 139, 162, 0.45),inset -20px 0px 60px 0 rgba(176, 146, 147, 0.44)
+    
+    top: 0
+    
+  .craterCon
+    content: " "
+    position: absolute
+      
+    width: 500px
+    height: 500px
+    border-radius: 250px
+    
+    /*Rounded border overflow fix : http://stackoverflow.com/a/10296258*/
+    position: absolute
+    -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC)
+    
+    top: 0
+  
+    .craters
+      width: 5px
+      height: 5px
+      background: transparent
+      box-shadow: multiple-box-shadow(40,500,$crater-color, $crater-color)
+
+      &:after
+        content: " "
+        position: absolute
+        width: 14px
+        height: 14px
+        background: transparent
+        box-shadow: multiple-box-shadow(20,500,$crater-color, $crater-color)
+
+      &:before
+        content: " "
+        position: absolute
+        width: 20px
+        height: 20px
+        background: transparent
+        box-shadow: multiple-box-shadow(20,500,$crater-color, $crater-color)
+    
+    
+#title
+  position: absolute
+  top: 5%
+  left: 0
+  right: 0
+  padding-left: 15px
+  
+  color: #000
+  text-align: center
+  font-family: 'Josefin Sans',sans-serif
+  font-weight: 700
+  font-size: 90px
+  line-height: 100px
+  letter-spacing: 15px
+  
+  opacity: 0.5
+  
+  transition: all 300ms ease
+  
+  @media screen and (max-height: 450px)
+    font-size: 60px
+    line-height: 60px
+    top: 1%
+  
+
+#subtitle
+  position: absolute
+  font-family: 'Josefin Sans',sans-serif
+  font-weight: 400
+  bottom: 5%
+  left: 0
+  right: 0
+  
+  font-size: 25px
+  text-align: center
+  letter-spacing: 6px
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.24)
+  
+  div
+    color: rgb(216, 216, 216)
+    width: 270px
+    margin: auto
+    margin-bottom: 15px
+    
+    transition: all 300ms ease
+    
+    animation-duration: 3s
+    animation-iteration-count: 1
+    animation-timing-function: ease
+    
+    &:nth-child(1)
+      animation-name: animMenu1
+    
+    &:nth-child(2)
+      animation-name: animMenu2
+    
+    &:nth-child(3)
+      animation-name: animMenu3
+        
+    &:hover
+      transform: translateY(-3px)
+      cursor: pointer
+      letter-spacing: 7px
+      text-shadow: 0 10px 20px rgba(0,0,0,0.8)
+    
+@keyframes animStar
+  from	
+    transform: translateY(0px)
+  to		
+    transform: translateY(-$default-size + px)
+      
+@keyframes rotate
+  from
+    transform: rotate(0deg) translate(-180px) rotate(0deg)
+  to
+    transform: rotate(360deg) translate(-180px) rotate(-360deg)
+
+@keyframes animMenu1
+  0%
+    transform: translateY(-26px)
+    opacity: 0
+  50%, 100%
+    transform: translateY( 0px )
+    opacity: 1
+    
+@keyframes animMenu2
+  0%, 25%
+    transform: translateY(-26px)
+    opacity: 0
+  75%, 100%
+    transform: translateY( 0px )
+    opacity: 1
+
+@keyframes animMenu3
+  0%, 50%
+    transform: translateY(-26px)
+    opacity: 0
+  100%
+    transform: translateY( 0px )
+    opacity: 1
